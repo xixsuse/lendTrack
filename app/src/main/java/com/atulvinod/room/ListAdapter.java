@@ -1,12 +1,16 @@
 package com.atulvinod.room;
 
+import android.arch.lifecycle.AndroidViewModel;
+import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -14,16 +18,31 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
 
     class EntityViewHolder extends RecyclerView.ViewHolder{
         private final TextView view;
+        private final TextView IDview;
         private EntityViewHolder(View V){
             super(V);
             view = V.findViewById(R.id.textView);
+            IDview = V.findViewById(R.id.idview);
+            Button b  = V.findViewById(R.id.showIDButton);
+            b.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(c,""+IDview.getText(),Toast.LENGTH_SHORT).show();
+                }
+            });
         }
+
     }
 
    private final LayoutInflater inflater;
     private List<Entity> mEntities;
-
-   ListAdapter(Context c){inflater = LayoutInflater.from(c);}
+    private EntityViewModel model;
+    Context c;
+   ListAdapter(Context c,EntityViewModel model){
+       this.c = c;
+       inflater = LayoutInflater.from(c);
+       this.model = model;
+   }
 
 
     @NonNull
@@ -37,6 +56,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
     public void onBindViewHolder(@NonNull EntityViewHolder holder, int position) {
         Entity current = mEntities.get(position);
         holder.view.setText(current.getName());
+        holder.IDview.setText(""+current.getID());
     }
 
     void setElements(List<Entity> elements){

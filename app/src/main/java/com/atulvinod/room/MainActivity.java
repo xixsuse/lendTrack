@@ -24,10 +24,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView rv = findViewById(R.id.list);
-        final ListAdapter adapter = new ListAdapter(this);
+        model = ViewModelProviders.of(this).get(EntityViewModel.class);
+        final ListAdapter adapter = new ListAdapter(this,model);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
-        model = ViewModelProviders.of(this).get(EntityViewModel.class);
+
         model.getAllWords().observe(this, new Observer<List<Entity>>() {
             @Override
             public void onChanged(@Nullable List<Entity> entities) {
@@ -49,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
 
         if(requestCode==NEW_ENTITY_ACTIVITY_REQUEST_CODE&&resultCode==RESULT_OK){
-            Entity entity = new Entity(data.getStringExtra(NewWordActivity.EXTRA_REPLY));
+            Entity entity = new Entity(data.getStringExtra(NewWordActivity.EXTRA_REPLY),0);
             model.insert(entity);
 
         }else{

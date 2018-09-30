@@ -19,4 +19,6 @@ public interface EntityDAO {
 
     @Query("DELETE FROM ENTITY_TABLE")
     void deleteAll();
+
+    
 }
