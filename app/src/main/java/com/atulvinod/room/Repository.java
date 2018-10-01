@@ -21,6 +21,21 @@ public class Repository {
     public void insert(Entity e){
         new insertTask(dao).execute(e);
     }
+    public void delete(int ID){new deleteTask(dao).execute(ID);}
+    public void update(EntityData e){ new updateTask(dao).execute(e);}
+    private static class deleteTask extends AsyncTask<Integer,Void,Void>{
+        private EntityDAO d;
+        deleteTask(EntityDAO dao){
+            this.d = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... strings) {
+            d.deleteRow(strings[0]);
+            return null;
+        }
+    }
+
     private static class insertTask extends AsyncTask<Entity,Void,Void>{
         private EntityDAO d;
 
@@ -32,6 +47,17 @@ public class Repository {
 
         insertTask(EntityDAO edao){
             d = edao;
+        }
+    }
+    private static class updateTask extends AsyncTask<EntityData,Void,Void>{
+        private EntityDAO d;
+        updateTask(EntityDAO dao){
+            d =dao;
+        }
+        @Override
+        protected Void doInBackground(EntityData... integers) {
+            d.update(integers[0].getID(),integers[0].getAmount());
+            return null;
         }
     }
 }

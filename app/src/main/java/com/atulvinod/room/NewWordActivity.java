@@ -14,13 +14,15 @@ import android.widget.EditText;
 public class NewWordActivity extends AppCompatActivity {
 
     public static final String EXTRA_REPLY = "com.example.android.wordlistsql.REPLY";
+    public static final String AMOUNT_REPLY = "com.example.android.wordlistsql.AMOUNT";
 
-    private EditText text;
+    private EditText text,amount;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_word);
         text = findViewById(R.id.edit_word);
+        amount = findViewById(R.id.numberInput);
         final Button button = findViewById(R.id.button_save);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -30,7 +32,9 @@ public class NewWordActivity extends AppCompatActivity {
                     setResult(RESULT_CANCELED,reply);
                 }else{
                     String textWord = text.getText().toString();
+                    String amountText = amount.getText().toString();
                     reply.putExtra(EXTRA_REPLY,textWord);
+                    reply.putExtra(AMOUNT_REPLY,amountText);
                     setResult(RESULT_OK,reply);
                 }
                 finish();

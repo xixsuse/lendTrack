@@ -22,4 +22,10 @@ public class EntityViewModel extends AndroidViewModel {
     public void insert(Entity e){
         repo.insert(e);
     }
+    public void delete(int id){
+        repo.delete(id);
+    }
+    public void update(EntityData e){
+        repo.update(e);
+    }
 }

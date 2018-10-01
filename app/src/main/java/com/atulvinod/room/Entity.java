@@ -8,6 +8,8 @@ import android.support.annotation.NonNull;
 public class Entity {
 
 
+    @ColumnInfo(name="amount")
+    private int mAmount;
 
     @ColumnInfo(name = "name")
     private String mName;
@@ -17,7 +19,8 @@ public class Entity {
     private int mID;
 
 
-    public Entity( String name,int mID){
+    public Entity( int amount,String name,int mID){
+        this.mAmount=amount;
         this.mID = mID;
         this.mName = name;
     }
@@ -33,4 +36,12 @@ public class Entity {
     public void setID(int id){
         this.mID = id;
     }
+    public int getAmount() {
+        return mAmount;
+    }
+
+    public void setAmount(int amount) {
+        mAmount = amount;
+    }
+
 }

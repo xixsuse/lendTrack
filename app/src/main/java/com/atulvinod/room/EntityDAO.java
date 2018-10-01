@@ -11,14 +11,18 @@ import java.util.List;
 @Dao
 public interface EntityDAO {
 
-    @Query("SELECT * FROM entity_table ORDER BY name ASC")
+    @Query("SELECT * FROM entity_table ORDER BY mID ASC")
     LiveData<List<Entity>> getEntity();
 
     @Insert
     void insert(Entity entity);
 
-    @Query("DELETE FROM ENTITY_TABLE")
+    @Query("DELETE FROM entity_table")
     void deleteAll();
 
-    
+    @Query("DELETE FROM entity_table WHERE mID = :id")
+    void deleteRow(int id);
+
+    @Query("UPDATE entity_table SET amount =:value WHERE mID = :id")
+    void update(int id,int value);
 }

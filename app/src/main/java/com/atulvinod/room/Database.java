@@ -21,6 +21,7 @@ public abstract class Database extends RoomDatabase {
                 INSTANCE = Room.databaseBuilder(c.getApplicationContext(),
                         Database.class, "entity_database").fallbackToDestructiveMigration().addCallback(callback).build();
 
+                /* .fallbackToDestructiveMigration clears the database when schema of the table is changed*/
             }
         }
     }

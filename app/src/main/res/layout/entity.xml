@@ -3,21 +3,27 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="10dp"
+    android:layout_marginLeft="2dp"
+    android:layout_marginRight="2dp"
     android:layout_marginTop="10dp"
+    android:background="#a6aa9c"
     android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:layout_weight="1"
-            android:background="#FF0000"
+            android:background="#f5efe3"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TextView"
             android:textSize="20sp" />
 
@@ -25,9 +31,11 @@
             android:id="@+id/idview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:layout_weight="1"
-            android:background="#00FFFF"
+            android:background="#e6e7e5"
             android:gravity="center"
+            android:padding="2dp"
             android:text="TextView"
             android:textSize="20dp" />
     </LinearLayout>
@@ -35,7 +43,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="5dp">
 
         <Button
             android:id="@+id/showIDButton"
@@ -45,10 +54,17 @@
             android:text="show ID" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/deleteButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Button" />
+            android:text="Delete" />
+
+        <Button
+            android:id="@+id/updateButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="update" />
     </LinearLayout>
 </LinearLayout>

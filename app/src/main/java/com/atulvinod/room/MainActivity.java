@@ -50,7 +50,8 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode,resultCode,data);
 
         if(requestCode==NEW_ENTITY_ACTIVITY_REQUEST_CODE&&resultCode==RESULT_OK){
-            Entity entity = new Entity(data.getStringExtra(NewWordActivity.EXTRA_REPLY),0);
+
+            Entity entity = new Entity(Integer.parseInt(data.getStringExtra(NewWordActivity.AMOUNT_REPLY)),data.getStringExtra(NewWordActivity.EXTRA_REPLY),0);
             model.insert(entity);
 
         }else{
