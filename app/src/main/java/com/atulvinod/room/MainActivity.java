@@ -4,6 +4,7 @@ import android.arch.lifecycle.Observer;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Intent;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RecyclerView rv = findViewById(R.id.list);
         model = ViewModelProviders.of(this).get(EntityViewModel.class);
-        final ListAdapter adapter = new ListAdapter(this,model);
+        final ListAdapter adapter = new ListAdapter(this,model,this);
         rv.setAdapter(adapter);
         rv.setLayoutManager(new LinearLayoutManager(this));
 
@@ -35,12 +36,20 @@ public class MainActivity extends AppCompatActivity {
                 adapter.setElements(entities);
             }
         });
-        Button button = (Button)findViewById(R.id.New);
-        button.setOnClickListener(new View.OnClickListener() {
+//        Button button = (Button)findViewById(R.id.New);
+//        button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent i = new Intent(MainActivity.this,NewWordActivity.class);
+//                startActivityForResult(i,NEW_ENTITY_ACTIVITY_REQUEST_CODE);
+//            }
+//        });
+        FloatingActionButton fab = findViewById(R.id.floatingActionButton);
+        fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(MainActivity.this,NewWordActivity.class);
-                startActivityForResult(i,NEW_ENTITY_ACTIVITY_REQUEST_CODE);
+            startActivityForResult(i,NEW_ENTITY_ACTIVITY_REQUEST_CODE);
             }
         });
 

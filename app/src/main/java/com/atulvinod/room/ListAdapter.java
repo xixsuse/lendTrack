@@ -1,5 +1,6 @@
 package com.atulvinod.room;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModelProviders;
@@ -24,7 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
     private List<Entity> mEntities;
     private EntityViewModel model;
     Context c;
-
+    Activity mActivity;
     class EntityViewHolder extends RecyclerView.ViewHolder{
         private final TextView view;
 
@@ -42,13 +43,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
             super(V);
             view = V.findViewById(R.id.textView);
             amount = V.findViewById(R.id.idview);
-            Button b  = V.findViewById(R.id.showIDButton);
+
             Button delete  = V.findViewById(R.id.deleteButton);
             Button update = V.findViewById(R.id.updateButton);
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    model.update(new EntityData(getID(),1000));
+                    UpdateDialog dialog = new UpdateDialog(model,mActivity,new EntityData(getID(),Integer.parseInt(amount.getText().toString())));
+                    dialog.show();
+
                 }
             });
             delete.setOnClickListener(new View.OnClickListener() {
@@ -57,22 +60,17 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
                     confirm(getID());
                 }
             });
-            b.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
 
-                    Toast.makeText(c,""+getID(),Toast.LENGTH_SHORT).show();
-                }
-            });
         }
 
     }
 
 
-   ListAdapter(Context c,EntityViewModel model){
+   ListAdapter(Context c, EntityViewModel model, Activity activity){
        this.c = c;
        inflater = LayoutInflater.from(c);
        this.model = model;
+       mActivity = activity;
    }
 
 
