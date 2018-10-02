@@ -88,4 +88,14 @@
 
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/fingerprintStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical|center_horizontal"
+        android:layout_margin="2dp"
+        android:gravity="center_horizontal"
+        android:text="Touch the fingerprint sensor to autheticate changes"
+        android:textColor="#e6b31e" />
+
 </LinearLayout>

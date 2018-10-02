@@ -26,6 +26,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
     private EntityViewModel model;
     Context c;
     Activity mActivity;
+    FingerprintHelper  fingerprint;
     class EntityViewHolder extends RecyclerView.ViewHolder{
         private final TextView view;
 
@@ -71,6 +72,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
        inflater = LayoutInflater.from(c);
        this.model = model;
        mActivity = activity;
+       fingerprint = new FingerprintHelper(this.c);
    }
 
 
@@ -103,17 +105,24 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
         }
     }
     public void confirm(final int ID){
-
+        fingerprint.startAuth(MainActivity.fingerprintManager,MainActivity.cryptoObject);
         AlertDialog.Builder builder;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             builder = new AlertDialog.Builder(c, android.R.style.Theme_Material_Dialog_Alert);
         } else {
             builder = new AlertDialog.Builder(c);
         }
-        builder.setTitle("Delete Entry").setMessage("Are you sure you want to delete this entry ?").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+        builder.setTitle("Delete Entry").setMessage("Are you sure you want to delete this entry ? \n Touch the fingerprint sensor to authenticate delete").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-               model.delete(ID);
+                if(fingerprint.getAUTHENTICATION_STATUS()==true){
+                    model.delete(ID);
+                    fingerprint.setAUTHENTICATION_STATUS(false);
+                    dialog.dismiss();
+                }else{
+                    Toast.makeText(c,"Touch the fingerprint sensor first to authenticate",Toast.LENGTH_LONG).show();
+                }
+
             }
         }).setNegativeButton("No", new DialogInterface.OnClickListener() {
             @Override
