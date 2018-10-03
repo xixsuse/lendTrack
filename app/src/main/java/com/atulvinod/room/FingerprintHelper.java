@@ -64,9 +64,14 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
         //Here, I’m creating the message that’ll be displayed if an error occurs//
         if(UpdateDialog.fingerprintStatus!=null){
             UpdateDialog.fingerprintStatus.setText(errString);
-        }else{
-            Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show();
         }
+        if(DeleteDialog.yes!=null){
+            DeleteDialog.yes.setEnabled(false);
+            DeleteDialog.fingerprintStatus.setText(errString);
+        }
+
+            Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show();
+
         setAUTHENTICATION_STATUS(false);
 
     }
@@ -81,6 +86,10 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
         }else
         Toast.makeText(context, "Authentication failed", Toast.LENGTH_LONG).show();
         setAUTHENTICATION_STATUS(false);
+        if(DeleteDialog.yes!=null){
+            DeleteDialog.yes.setEnabled(false);
+            DeleteDialog.fingerprintStatus.setText("Authentication Failed");
+        }
     }
 
     @Override
@@ -91,7 +100,10 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
         setAUTHENTICATION_STATUS(false);
         if(UpdateDialog.fingerprintStatus!=null){
             UpdateDialog.fingerprintStatus.setText(helpString);
-        }else
+        }
+        if(DeleteDialog.yes!=null){
+            DeleteDialog.fingerprintStatus.setText(helpString);
+        }
         Toast.makeText(context,helpString, Toast.LENGTH_LONG).show();
     }
     @Override
@@ -104,10 +116,15 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
             UpdateDialog.fingerprintStatus.setText("Authentication Successful");
             Toast.makeText(context, "Fingerprint Authenticated", Toast.LENGTH_SHORT).show();
 
-        } else {
-            Toast.makeText(context, "Fingerprint Authenticated", Toast.LENGTH_LONG).show();
-
         }
+
+
+        if(DeleteDialog.yes!=null){
+            DeleteDialog.yes.setEnabled(true);
+            DeleteDialog.fingerprintStatus.setText("Authentication Successful");
+        }
+        Toast.makeText(context, "Fingerprint Authenticated", Toast.LENGTH_LONG).show();
+
     }
 
 }

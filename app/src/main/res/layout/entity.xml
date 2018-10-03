@@ -7,7 +7,7 @@
     android:layout_marginLeft="2dp"
     android:layout_marginRight="2dp"
     android:layout_marginTop="10dp"
-    android:background="#e6b31e"
+    android:background="@color/colorPrimary"
     android:orientation="vertical"
     android:showDividers="end">
 
@@ -17,11 +17,11 @@
         android:layout_height="30dp"
         android:layout_margin="5dp"
         android:layout_weight="1"
-        android:background="#e6b31e"
+        android:background="@color/colorPrimary"
         android:gravity="left"
         android:paddingLeft="5dp"
         android:text="TextView"
-        android:textColor="#000000"
+        android:textColor="#ffffff"
         android:textSize="20sp" />
 
     <TextView
@@ -31,19 +31,19 @@
         android:layout_marginLeft="5dp"
         android:layout_marginRight="5dp"
         android:layout_weight="1"
-        android:background="#343434"
+        android:background="@android:color/darker_gray"
         android:gravity="right|center_vertical"
         android:includeFontPadding="true"
         android:paddingRight="10dp"
         android:text="TextView"
-        android:textColor="#e6b31e"
+        android:textColor="#000000"
         android:textSize="45sp"
         app:fontFamily="@font/myfonts" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="#e6b31e"
+        android:background="@color/colorPrimary"
         android:orientation="horizontal"
         android:padding="5dp"
         android:showDividers="none|middle|end">
