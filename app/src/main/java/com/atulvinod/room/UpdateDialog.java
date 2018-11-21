@@ -22,12 +22,15 @@ public class UpdateDialog extends Dialog {
     static Button add,deduct;
     static TextView fingerprintStatus;
     private TransactionsViewModel a;
+    TransationHistoryManager history;
+
     public UpdateDialog(EntityViewModel model, Activity activity,EntityData data,TransactionsViewModel a){
         super(activity);
         mViewModel = model;
         this.activity = activity;
         this.data  = data;
         this.a = a;
+        history = new TransationHistoryManager(activity);
 
     }
 
@@ -57,6 +60,11 @@ public class UpdateDialog extends Dialog {
                     fingerprint.setAUTHENTICATION_STATUS(false);
                     Transactions t = new Transactions(0,d.toString(),data.getID(),desc.getText().toString(),"+"+input.getText().toString());
                     a.createTransaction(t);
+
+                    TransactionObject obj = history.getTransaction(data.getID());
+                    obj.insertRecord(new Record("+"+amountView.getText().toString(),desc.getText().toString(),d.toString()));
+                    history.createTransation(obj);
+
                     dismiss();
 
 
@@ -78,6 +86,9 @@ public class UpdateDialog extends Dialog {
                         Transactions t = new Transactions(0,d.toString(),data.getID(),desc.getText().toString(),"-"+input.getText().toString());
                         a.createTransaction(t);
                         fingerprint.setAUTHENTICATION_STATUS(false);
+                        TransactionObject obj = history.getTransaction(data.getID());
+                        obj.insertRecord(new Record("-"+amountView.getText().toString(),desc.getText().toString(),d.toString()));
+                        history.createTransation(obj);
                         dismiss();
                     }
                 }

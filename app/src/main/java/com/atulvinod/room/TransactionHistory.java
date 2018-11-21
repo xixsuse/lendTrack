@@ -15,7 +15,7 @@ import android.view.View;
 import java.util.List;
 
 public class TransactionHistory extends AppCompatActivity {
-
+//TODO: Change Transaction System from SQL based to JSON Object based implementing shared prefs
     private int ID;
     private TransactionsListAdapter adapter;
     private RecyclerView list;

@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     public EntityViewModel model;
     public TransactionsViewModel transactionModel;
     private static final String KEY_NAME = "yourKey";
+    private static final String PREF= "preferences";
     private Cipher cipher;
     private KeyStore keyStore;
     private KeyGenerator keyGenerator;
