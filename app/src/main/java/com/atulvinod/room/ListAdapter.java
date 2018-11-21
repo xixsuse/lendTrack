@@ -6,6 +6,7 @@ import android.arch.lifecycle.AndroidViewModel;
 import android.arch.lifecycle.ViewModelProviders;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Build;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -24,6 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
     private final LayoutInflater inflater;
     private List<Entity> mEntities;
     private EntityViewModel model;
+    private TransactionsViewModel tvm;
     Context c;
     Activity mActivity;
     FingerprintHelper  fingerprint;
@@ -31,7 +33,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
         private final TextView view;
 
         private int ID;
-
+        private Context c;
         public void setID(int i){
             ID = i;
         }
@@ -42,6 +44,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
         private final TextView amount;
         private EntityViewHolder(View V){
             super(V);
+            c = V.getContext();
             view = V.findViewById(R.id.textView);
             amount = V.findViewById(R.id.idview);
 
@@ -50,7 +53,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UpdateDialog dialog = new UpdateDialog(model,mActivity,new EntityData(getID(),Integer.parseInt(amount.getText().toString())));
+                    UpdateDialog dialog = new UpdateDialog(model,mActivity,new EntityData(getID(),Integer.parseInt(amount.getText().toString())),tvm);
                     dialog.show();
 
                 }
@@ -62,18 +65,27 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
                     deleteDialog.show();
                 }
             });
+            V.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent i = new Intent(c,TransactionHistory.class);
+                    i.putExtra("ID",getID());
+                    c.startActivity(i);
 
+                }
+            });
         }
 
     }
 
 
-   ListAdapter(Context c, EntityViewModel model, Activity activity){
+   ListAdapter(Context c, EntityViewModel model, Activity activity,TransactionsViewModel tv){
        this.c = c;
        inflater = LayoutInflater.from(c);
        this.model = model;
        mActivity = activity;
        fingerprint = new FingerprintHelper(this.c);
+       tvm = tv;
    }
 
 

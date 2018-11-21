@@ -30,8 +30,8 @@ public abstract class Database extends RoomDatabase {
     }
     private static RoomDatabase.Callback callback = new RoomDatabase.Callback(){
 
-        public void onOpen(@NonNull SupportSQLiteDatabase db){
-            super.onOpen(db);
-        }
-    };
+    public void onOpen(@NonNull SupportSQLiteDatabase db){
+        super.onOpen(db);
+    }
+};
 }

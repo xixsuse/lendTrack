@@ -6,13 +6,13 @@ import android.support.annotation.NonNull;
 
 @android.arch.persistence.room.Entity(tableName = "entity_table")
 public class Entity {
-
+    @ColumnInfo(name = "name")
+    private String mName;
 
     @ColumnInfo(name="amount")
     private int mAmount;
 
-    @ColumnInfo(name = "name")
-    private String mName;
+
 
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name="mID")

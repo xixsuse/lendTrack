@@ -9,23 +9,25 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Date;
+
 public class UpdateDialog extends Dialog {
 
     private EntityViewModel mViewModel;
     private Activity activity;
     private EntityData data;
     TextView amountView;
-    EditText input;
+    EditText input,desc;
     FingerprintHelper fingerprint;
     static Button add,deduct;
     static TextView fingerprintStatus;
-
-    public UpdateDialog(EntityViewModel model, Activity activity,EntityData data){
+    private TransactionsViewModel a;
+    public UpdateDialog(EntityViewModel model, Activity activity,EntityData data,TransactionsViewModel a){
         super(activity);
         mViewModel = model;
         this.activity = activity;
         this.data  = data;
-
+        this.a = a;
 
     }
 
@@ -35,6 +37,7 @@ public class UpdateDialog extends Dialog {
         setContentView(R.layout.update);
          add = findViewById(R.id.AddButton);
         deduct = findViewById(R.id.deductButton);
+        desc = findViewById(R.id.newDescription);
         fingerprintStatus = findViewById(R.id.fingerprintStatus);
         fingerprint = new FingerprintHelper(getContext());
         add.setEnabled(false);
@@ -43,6 +46,7 @@ public class UpdateDialog extends Dialog {
         amountView.setText(""+data.getAmount());
         input = findViewById(R.id.numberInput);
         fingerprint.startAuth(MainActivity.fingerprintManager,MainActivity.cryptoObject);
+        final Date d = new Date();
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,7 +55,10 @@ public class UpdateDialog extends Dialog {
                 }else {
                     mViewModel.update(new EntityData(data.getID(), data.getAmount() + Integer.parseInt(input.getText().toString())));
                     fingerprint.setAUTHENTICATION_STATUS(false);
+                    Transactions t = new Transactions(0,d.toString(),data.getID(),desc.getText().toString(),"+"+input.getText().toString());
+                    a.createTransaction(t);
                     dismiss();
+
 
                 }
             }
@@ -68,6 +75,8 @@ public class UpdateDialog extends Dialog {
                         return;
                     } else {
                         mViewModel.update(new EntityData(data.getID(), data.getAmount() - Integer.parseInt(input.getText().toString())));
+                        Transactions t = new Transactions(0,d.toString(),data.getID(),desc.getText().toString(),"-"+input.getText().toString());
+                        a.createTransaction(t);
                         fingerprint.setAUTHENTICATION_STATUS(false);
                         dismiss();
                     }

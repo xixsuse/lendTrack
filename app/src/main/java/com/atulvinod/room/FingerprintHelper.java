@@ -62,15 +62,9 @@ public class FingerprintHelper extends FingerprintManager.AuthenticationCallback
 
         //I’m going to display the results of fingerprint authentication as a series of toasts.
         //Here, I’m creating the message that’ll be displayed if an error occurs//
-        if(UpdateDialog.fingerprintStatus!=null){
-            UpdateDialog.fingerprintStatus.setText(errString);
-        }
-        if(DeleteDialog.yes!=null){
-            DeleteDialog.yes.setEnabled(false);
-            DeleteDialog.fingerprintStatus.setText(errString);
-        }
 
-            Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show();
+
+            ///Toast.makeText(context, "Authentication error\n" + errString, Toast.LENGTH_LONG).show();
 
         setAUTHENTICATION_STATUS(false);
 

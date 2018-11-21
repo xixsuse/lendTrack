@@ -23,6 +23,7 @@ public class Repository {
     }
     public void delete(int ID){new deleteTask(dao).execute(ID);}
     public void update(EntityData e){ new updateTask(dao).execute(e);}
+
     private static class deleteTask extends AsyncTask<Integer,Void,Void>{
         private EntityDAO d;
         deleteTask(EntityDAO dao){

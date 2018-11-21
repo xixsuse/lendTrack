@@ -41,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_ENTITY_ACTIVITY_REQUEST_CODE = 1;
 
     public EntityViewModel model;
+    public TransactionsViewModel transactionModel;
     private static final String KEY_NAME = "yourKey";
     private Cipher cipher;
     private KeyStore keyStore;
@@ -55,10 +56,10 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         RecyclerView rv = findViewById(R.id.list);
         model = ViewModelProviders.of(this).get(EntityViewModel.class);
-        final ListAdapter adapter = new ListAdapter(this,model,this);
-        rv.setAdapter(adapter);
+        transactionModel = ViewModelProviders.of(this).get(TransactionsViewModel.class);
+        final ListAdapter adapter = new ListAdapter(this,model,this,transactionModel);
         rv.setLayoutManager(new LinearLayoutManager(this));
-
+        rv.setAdapter(adapter);
         model.getAllWords().observe(this, new Observer<List<Entity>>() {
             @Override
             public void onChanged(@Nullable List<Entity> entities) {
@@ -180,6 +181,7 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode==NEW_ENTITY_ACTIVITY_REQUEST_CODE&&resultCode==RESULT_OK){
 
             Entity entity = new Entity(Integer.parseInt(data.getStringExtra(NewWordActivity.AMOUNT_REPLY)),data.getStringExtra(NewWordActivity.EXTRA_REPLY),0);
+
             model.insert(entity);
 
         }else{
