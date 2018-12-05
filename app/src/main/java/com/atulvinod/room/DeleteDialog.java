@@ -1,7 +1,10 @@
 package com.atulvinod.room;
 
 import android.app.Activity;
+import android.app.Application;
 import android.app.Dialog;
+import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.view.View;
@@ -15,6 +18,7 @@ public class DeleteDialog extends Dialog {
     static Button yes,no;
     static TextView fingerprintStatus;
     FingerprintHelper fingerprint;
+    RecordRepository repo;
    int ID;
     public DeleteDialog(Activity e,EntityViewModel model,int id){
         super(e);
@@ -22,8 +26,22 @@ public class DeleteDialog extends Dialog {
         this.model = model;
         fingerprint = new FingerprintHelper(e);
         this.ID = id;
-    }
+        new getRepo(ID).execute(e.getApplication());
 
+    }
+    class getRepo extends AsyncTask<Application,Void,Void>{
+        int ID;
+        public getRepo(int ID){
+            this.ID = ID;
+
+
+        }
+        @Override
+        protected Void doInBackground(Application... contexts) {
+            repo = new RecordRepository(contexts[0],ID);
+            return null;
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -40,6 +58,7 @@ public class DeleteDialog extends Dialog {
             public void onClick(View v) {
                 Toast.makeText(mActivity.getApplicationContext(),"Changes were saved",Toast.LENGTH_SHORT).show();
                 model.delete(ID);
+                repo.deleteRecord(ID);
                 dismiss();
             }
         });

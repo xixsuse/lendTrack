@@ -1,36 +1,61 @@
 package com.atulvinod.room;
 
+import android.arch.persistence.room.ColumnInfo;
+import android.arch.persistence.room.PrimaryKey;
+
+@android.arch.persistence.room.Entity(tableName = "record_table")
 public class Record {
-    String am;
-    String desc;
-    String dateTime;
-    public Record(String amount,String d,String dt){
-        am = amount;
-        desc = d;
-        dt = dateTime;
+    @ColumnInfo(name="Amount")
+    String Amount;
+
+    @ColumnInfo(name="Description")
+    String Description;
+
+    @ColumnInfo(name= "Date")
+    String Date;
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name="SNo")
+    int SNo;
+
+    @ColumnInfo(name = "ID")
+    int ID;
+
+    public Record(String Amount,String Description,String Date,int ID){
+        this.Amount = Amount;
+        this.Description = Description;
+        this.Date = Date;
+        this.ID = ID;
+    }
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
     }
 
     public String getAmount() {
-        return am;
+        return Amount;
     }
 
-    public void setAmount(String am) {
-        this.am = am;
+    public void setAmount(String amount) {
+        Amount = amount;
     }
 
     public String getDescription() {
-        return desc;
+        return Description;
     }
 
-    public void setDescription(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.Description = description;
     }
 
-    public String getDateTime() {
-        return dateTime;
+    public String getDate() {
+        return Date;
     }
 
-    public void setDateTime(String dateTime) {
-        this.dateTime = dateTime;
+    public void setDate(String date) {
+        this.Date = date;
     }
 }

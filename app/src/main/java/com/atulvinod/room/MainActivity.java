@@ -20,6 +20,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedInputStream;
@@ -41,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
     public static final int NEW_ENTITY_ACTIVITY_REQUEST_CODE = 1;
 
     public EntityViewModel model;
-    public TransactionsViewModel transactionModel;
+
     private static final String KEY_NAME = "yourKey";
     private static final String PREF= "preferences";
     private Cipher cipher;
@@ -50,20 +51,28 @@ public class MainActivity extends AppCompatActivity {
     public static FingerprintManager.CryptoObject cryptoObject;
     public static FingerprintManager fingerprintManager;
     private KeyguardManager keyguardManager;
+    private IndiaCurrencyFormatter formatter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        formatter = new IndiaCurrencyFormatter();
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         RecyclerView rv = findViewById(R.id.list);
         model = ViewModelProviders.of(this).get(EntityViewModel.class);
-        transactionModel = ViewModelProviders.of(this).get(TransactionsViewModel.class);
-        final ListAdapter adapter = new ListAdapter(this,model,this,transactionModel);
+        final TextView totalLent = findViewById(R.id.totalLentView);
+        final ListAdapter adapter = new ListAdapter(this,model,this);
         rv.setLayoutManager(new LinearLayoutManager(this));
         rv.setAdapter(adapter);
         model.getAllWords().observe(this, new Observer<List<Entity>>() {
             @Override
             public void onChanged(@Nullable List<Entity> entities) {
+                int Total = 0;
+                for(int i = 0;i<entities.size();i++){
+                    Total = Total+entities.get(i).getAmount();
+                }
+
+                totalLent.setText(formatter.formatAmount(Total));
                 adapter.setElements(entities);
             }
         });

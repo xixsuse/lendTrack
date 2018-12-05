@@ -2,4 +2,5 @@
     <string name="app_name">LendTrack</string>
     <string name="title_activity_new_word">NewWordActivity</string>
     <string name="title_activity_transaction_history">TransactionHistory</string>
+    <string name="title_activity_history">History</string>
 </resources>

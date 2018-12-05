@@ -25,7 +25,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
     private final LayoutInflater inflater;
     private List<Entity> mEntities;
     private EntityViewModel model;
-    private TransactionsViewModel tvm;
+    private IndiaCurrencyFormatter formatter;
     Context c;
     Activity mActivity;
     FingerprintHelper  fingerprint;
@@ -40,6 +40,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
         public int getID() {
             return ID;
         }
+        private  String internalString;
+
+        public String getInternalString() {
+            return internalString;
+        }
+
+        public void setInternalString(String internalString) {
+            this.internalString = internalString;
+        }
 
         private final TextView amount;
         private EntityViewHolder(View V){
@@ -47,13 +56,13 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
             c = V.getContext();
             view = V.findViewById(R.id.textView);
             amount = V.findViewById(R.id.idview);
-
+            setInternalString(amount.getText().toString());
             Button delete  = V.findViewById(R.id.deleteButton);
             Button update = V.findViewById(R.id.updateButton);
             update.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    UpdateDialog dialog = new UpdateDialog(model,mActivity,new EntityData(getID(),Integer.parseInt(amount.getText().toString())),tvm);
+                    UpdateDialog dialog = new UpdateDialog(model,mActivity,new EntityData(getID(),Integer.parseInt(getInternalString())));
                     dialog.show();
 
                 }
@@ -67,9 +76,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
             });
             V.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                    Intent i = new Intent(c,TransactionHistory.class);
-                    i.putExtra("ID",getID());
+                public void onClick(View v) { Intent i = new Intent(c,History.class);
+                    i.putExtra("TRANSACTION_ID",getID());
                     c.startActivity(i);
 
                 }
@@ -79,13 +87,14 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
     }
 
 
-   ListAdapter(Context c, EntityViewModel model, Activity activity,TransactionsViewModel tv){
+   ListAdapter(Context c, EntityViewModel model, Activity activity){
        this.c = c;
        inflater = LayoutInflater.from(c);
        this.model = model;
        mActivity = activity;
        fingerprint = new FingerprintHelper(this.c);
-       tvm = tv;
+       formatter = new IndiaCurrencyFormatter();
+
    }
 
 
@@ -100,7 +109,8 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
     public void onBindViewHolder(@NonNull EntityViewHolder holder, int position) {
         Entity current = mEntities.get(position);
         holder.view.setText(current.getName());
-        holder.amount.setText(""+current.getAmount());
+        holder.amount.setText(formatter.formatAmount(current.getAmount()));
+        holder.setInternalString(""+current.getAmount());
         holder.setID(current.getID());
     }
 

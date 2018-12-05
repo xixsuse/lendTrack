@@ -2,6 +2,7 @@ package com.atulvinod.room;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,17 +22,24 @@ public class UpdateDialog extends Dialog {
     FingerprintHelper fingerprint;
     static Button add,deduct;
     static TextView fingerprintStatus;
-    private TransactionsViewModel a;
-    TransationHistoryManager history;
+    RecordRepository repo;
+    IndiaCurrencyFormatter formatter;
 
-    public UpdateDialog(EntityViewModel model, Activity activity,EntityData data,TransactionsViewModel a){
+    public UpdateDialog(EntityViewModel model, Activity activity,EntityData data){
         super(activity);
         mViewModel = model;
         this.activity = activity;
         this.data  = data;
-        this.a = a;
-        history = new TransationHistoryManager(activity);
+        formatter = new IndiaCurrencyFormatter();
+        new openRepo().execute();
 
+    }
+    class openRepo extends AsyncTask<Void,Void,Void>{
+        @Override
+        protected Void doInBackground(Void... voids) {
+            repo = new RecordRepository(activity.getApplication(),data.getID());
+            return null;
+        }
     }
 
     @Override
@@ -58,12 +66,8 @@ public class UpdateDialog extends Dialog {
                 }else {
                     mViewModel.update(new EntityData(data.getID(), data.getAmount() + Integer.parseInt(input.getText().toString())));
                     fingerprint.setAUTHENTICATION_STATUS(false);
-                    Transactions t = new Transactions(0,d.toString(),data.getID(),desc.getText().toString(),"+"+input.getText().toString());
-                    a.createTransaction(t);
+                    repo.insertRecord(new Record("+ "+input.getText(),""+desc.getText().toString(),""+d.toString(),data.getID()));
 
-                    TransactionObject obj = history.getTransaction(data.getID());
-                    obj.insertRecord(new Record("+"+amountView.getText().toString(),desc.getText().toString(),d.toString()));
-                    history.createTransation(obj);
 
                     dismiss();
 
@@ -83,12 +87,9 @@ public class UpdateDialog extends Dialog {
                         return;
                     } else {
                         mViewModel.update(new EntityData(data.getID(), data.getAmount() - Integer.parseInt(input.getText().toString())));
-                        Transactions t = new Transactions(0,d.toString(),data.getID(),desc.getText().toString(),"-"+input.getText().toString());
-                        a.createTransaction(t);
-                        fingerprint.setAUTHENTICATION_STATUS(false);
-                        TransactionObject obj = history.getTransaction(data.getID());
-                        obj.insertRecord(new Record("-"+amountView.getText().toString(),desc.getText().toString(),d.toString()));
-                        history.createTransation(obj);
+                        repo.insertRecord(new Record("- "+input.getText(),""+desc.getText().toString(),""+d.toString(),data.getID()));
+
+
                         dismiss();
                     }
                 }

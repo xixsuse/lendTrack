@@ -27,8 +27,8 @@
             android:label="@string/title_activity_new_word"
             android:theme="@style/AppTheme.NoActionBar" />
         <activity
-            android:name=".TransactionHistory"
-            android:label="@string/title_activity_transaction_history"
+            android:name=".History"
+            android:label="@string/title_activity_history"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

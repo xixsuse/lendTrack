@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="10dp"
-        android:text="Are you sure yu want to delete this entry?"
+        android:text="Are you sure you want to delete this entry?"
         android:textColor="#ffffff"
         android:textSize="15sp" />
 
