@@ -24,6 +24,22 @@ public class RecordRepository {
     public void deleteRecord(int ID){
         new deleteTask(dao).execute(ID);
     }
+    public void deleteAll(int ID){new deleteAllTask(dao).execute(ID);}
+
+    private static class deleteAllTask extends AsyncTask<Integer,Void,Void> {
+        private RecordDAO d;
+        deleteAllTask(RecordDAO dao){
+            this.d = dao;
+        }
+
+        @Override
+        protected Void doInBackground(Integer... strings) {
+            d.deleteAll(strings[0]);
+            return null;
+        }
+    }
+
+
     private static class deleteTask extends AsyncTask<Integer,Void,Void> {
         private RecordDAO d;
         deleteTask(RecordDAO dao){

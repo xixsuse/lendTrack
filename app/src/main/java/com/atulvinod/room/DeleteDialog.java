@@ -58,7 +58,7 @@ public class DeleteDialog extends Dialog {
             public void onClick(View v) {
                 Toast.makeText(mActivity.getApplicationContext(),"Changes were saved",Toast.LENGTH_SHORT).show();
                 model.delete(ID);
-                repo.deleteRecord(ID);
+                repo.deleteAll(ID);
                 dismiss();
             }
         });

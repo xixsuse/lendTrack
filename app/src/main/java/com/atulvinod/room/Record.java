@@ -5,6 +5,7 @@ import android.arch.persistence.room.PrimaryKey;
 
 @android.arch.persistence.room.Entity(tableName = "record_table")
 public class Record {
+
     @ColumnInfo(name="Amount")
     String Amount;
 
@@ -57,5 +58,9 @@ public class Record {
 
     public void setDate(String date) {
         this.Date = date;
+    }
+
+    public int getSno(){
+        return SNo;
     }
 }

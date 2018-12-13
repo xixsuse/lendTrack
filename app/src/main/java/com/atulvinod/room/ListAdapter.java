@@ -78,6 +78,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.EntityViewHold
                 @Override
                 public void onClick(View v) { Intent i = new Intent(c,History.class);
                     i.putExtra("TRANSACTION_ID",getID());
+                    i.putExtra("AVALIBLE_AMOUNT",Integer.parseInt(getInternalString()));
                     c.startActivity(i);
 
                 }

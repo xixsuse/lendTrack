@@ -41,7 +41,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final int NEW_ENTITY_ACTIVITY_REQUEST_CODE = 1;
 
-    public EntityViewModel model;
+    public static EntityViewModel model;
 
     private static final String KEY_NAME = "yourKey";
     private static final String PREF= "preferences";

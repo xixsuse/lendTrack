@@ -16,8 +16,12 @@ public interface RecordDAO {
     @Insert
     void insert(Record r);
 
-    @Query("DELETE FROM record_table Where ID=:id")
+    @Query("DELETE FROM record_table Where SNo=:id")
     void delete(int id);
+
+    @Query("DELETE FROM record_table Where ID=:id")
+    void deleteAll(int id);
+
 
 
 

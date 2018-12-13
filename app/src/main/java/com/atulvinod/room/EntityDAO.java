@@ -25,4 +25,6 @@ public interface EntityDAO {
 
     @Query("UPDATE entity_table SET amount =:value WHERE mID = :id")
     void update(int id,int value);
+
+
 }
